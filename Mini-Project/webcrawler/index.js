@@ -12,7 +12,7 @@ async function startCrawling() {
   await page.waitForTimeout(1000);
   for (let i = 1; i <= 10; i++) {
     await page.waitForTimeout(500);
-    const image = await page.$eval(
+    const img = await page.$eval(
       `#container > div.content > div.product_result_wrap.product_result_wrap01 > div > dl > dd:nth-child(2) > div.product_list > dl > dd:nth-child(6) > ul > li:nth-child(${i}) > dl > dt > a > img`,
       (el) => el.getAttribute("src")
     );
@@ -20,10 +20,10 @@ async function startCrawling() {
       `#container > div.content > div.product_result_wrap.product_result_wrap01 > div > dl > dd:nth-child(2) > div.product_list > dl > dd:nth-child(6) > ul > li:nth-child(${i}) > dl > dd`,
       (el) => el.textContent
     );
-    const result = [image, name];
+
     const starbucksList = new Starbucks({
-      name: result.name,
-      img: result.image,
+      img: img,
+      name: name,
     });
     await starbucksList.save();
   }
